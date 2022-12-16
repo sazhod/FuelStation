@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace FuelStation.Models.Etities
+namespace FuelStation.Models.Entities
 {
     public partial class Employee
     {
@@ -14,9 +14,11 @@ namespace FuelStation.Models.Etities
 
         public int Id { get; set; }
         public string Lastname { get; set; } = null!;
-        public string Firstname { get; set; } = null!;
+        public string Firsname { get; set; } = null!;
         public string Patronymic { get; set; } = null!;
         public int Idrole { get; set; }
+        public string Login { get; set; } = null!;
+        public string Password { get; set; } = null!;
 
         public virtual Role IdroleNavigation { get; set; } = null!;
         public virtual ICollection<FuelSale> FuelSales { get; set; }

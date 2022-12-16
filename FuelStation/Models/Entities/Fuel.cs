@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace FuelStation.Models.Etities
+namespace FuelStation.Models.Entities
 {
     public partial class Fuel
     {
@@ -12,9 +12,9 @@ namespace FuelStation.Models.Etities
         }
 
         public int Id { get; set; }
-        public int Name { get; set; }
-        public int Idvendor { get; set; }
+        public string Name { get; set; } = null!;
         public int Idmeasure { get; set; }
+        public int Idvendor { get; set; }
         public decimal CostPerUnit { get; set; }
 
         public virtual Measure IdmeasureNavigation { get; set; } = null!;

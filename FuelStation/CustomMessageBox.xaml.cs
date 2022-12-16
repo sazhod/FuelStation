@@ -9,20 +9,29 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace FuelStation
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Логика взаимодействия для CustomMessageBox.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class CustomMessageBox : Window
     {
-        public MainWindow()
+
+        private string MessageText { set => MessageTextBox.Text = value; }
+
+        public CustomMessageBox(string message)
         {
             InitializeComponent();
+            this.MessageText = message;
+        }
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

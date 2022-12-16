@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace FuelStation.Models.Etities
+namespace FuelStation.Models.Entities
 {
     public partial class Role
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace FuelStation.Models.Etities
+namespace FuelStation.Models.Entities
 {
     public partial class EfCoreDbContext : DbContext
     {
@@ -33,7 +33,7 @@ namespace FuelStation.Models.Etities
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseMySql("server=localhost;user=root;password=7684;database=fuel_station", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.31-mysql"))
+                optionsBuilder.UseMySql("server=localhost;user=root;password=7684;database=gus_station", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.29-mysql"))
                     .UseLazyLoadingProxies();
             }
         }
@@ -47,19 +47,27 @@ namespace FuelStation.Models.Etities
             {
                 entity.ToTable("employee");
 
-                entity.HasIndex(e => e.Idrole, "employee_role_idx");
+                entity.HasIndex(e => e.Idrole, "user_role_idx");
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.Firstname)
+                entity.Property(e => e.Firsname)
                     .HasMaxLength(45)
-                    .HasColumnName("firstname");
+                    .HasColumnName("firsname");
 
                 entity.Property(e => e.Idrole).HasColumnName("idrole");
 
                 entity.Property(e => e.Lastname)
                     .HasMaxLength(45)
                     .HasColumnName("lastname");
+
+                entity.Property(e => e.Login)
+                    .HasMaxLength(45)
+                    .HasColumnName("login");
+
+                entity.Property(e => e.Password)
+                    .HasMaxLength(45)
+                    .HasColumnName("password");
 
                 entity.Property(e => e.Patronymic)
                     .HasMaxLength(45)
@@ -89,7 +97,9 @@ namespace FuelStation.Models.Etities
 
                 entity.Property(e => e.Idvendor).HasColumnName("idvendor");
 
-                entity.Property(e => e.Name).HasColumnName("name");
+                entity.Property(e => e.Name)
+                    .HasMaxLength(45)
+                    .HasColumnName("name");
 
                 entity.HasOne(d => d.IdmeasureNavigation)
                     .WithMany(p => p.Fuels)
@@ -207,9 +217,7 @@ namespace FuelStation.Models.Etities
             {
                 entity.ToTable("vendor");
 
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("id");
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Description)
                     .HasMaxLength(45)
