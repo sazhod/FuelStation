@@ -40,14 +40,12 @@ namespace FuelStation
                 CustomMessageBox customMessageBox = new CustomMessageBox("Проверьте правильность ввода данных.");
                 customMessageBox.ShowDialog();
             }
-        }
-
-        private void RegistrationButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.Hide();
-            Registration registration = new Registration();
-            registration.ShowDialog();
-            this.Show();
+            else if (employee.Count == 1 && employee[0].Login == login && employee[0].Password == password)
+            {
+                this.Hide();
+                MainWindow mainWindow = new MainWindow();
+                mainWindow.Show();
+            }
         }
     }
 }

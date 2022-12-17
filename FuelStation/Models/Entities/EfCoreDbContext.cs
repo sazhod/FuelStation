@@ -7,7 +7,7 @@ namespace FuelStation.Models.Entities
 {
     public partial class EfCoreDbContext : DbContext
     {
-        public static EfCoreDbContext Instance { get; private set; }
+        public static EfCoreDbContext Instance { get; set; }
 
         static EfCoreDbContext() => Instance = new EfCoreDbContext();
 

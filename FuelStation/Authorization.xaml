@@ -45,13 +45,6 @@
             <TextBlock
       Text="Войти" />
         </Button>
-        <Button x:Name="RegistrationButton" HorizontalAlignment="Center" VerticalAlignment="Bottom" MinWidth="200" MinHeight="32" Margin="0,0,0,51"
-    materialDesign:ButtonProgressAssist.IsIndeterminate="True"
-    materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
-    materialDesign:ButtonProgressAssist.Value="-1"
-    materialDesign:ButtonAssist.CornerRadius="10"
-    Content="Регистрация"
-    Style="{StaticResource MaterialDesignOutlinedButton}" Click="RegistrationButton_Click" />
 
     </Grid>
 </Window>
