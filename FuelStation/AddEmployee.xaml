@@ -43,7 +43,7 @@
         </StackPanel>
         <StackPanel MinWidth="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="50,0,0,150">
             <TextBox x:Name="LoginTextBox"
-                     TextChanged="LoginTextBox_TextChanged"
+                     TextChanged="LoginTextBox_TextChanged" PreviewTextInput="TextBox_PreviewTextInput" PreviewKeyDown="TextBox_PreviewKeyDown"
     VerticalAlignment="Top"
     materialDesign:HintAssist.Hint="Login"
     MaxLength="40"
@@ -52,7 +52,7 @@
         </StackPanel>
         <StackPanel MinWidth="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="50,0,0,0">
 
-            <PasswordBox x:Name="PasswordBox"
+            <PasswordBox x:Name="PasswordBox" PreviewTextInput="TextBox_PreviewTextInput" PreviewKeyDown="TextBox_PreviewKeyDown"
     VerticalAlignment="Top"
     materialDesign:HintAssist.Hint="Password"
                 materialDesign:TextFieldAssist.HasClearButton="True"
@@ -60,14 +60,14 @@
         </StackPanel>
         <StackPanel MinWidth="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="50,150,0,0">
 
-            <PasswordBox x:Name="RepeatPasswordBox"
+            <PasswordBox x:Name="RepeatPasswordBox" PreviewTextInput="TextBox_PreviewTextInput" PreviewKeyDown="TextBox_PreviewKeyDown"
     VerticalAlignment="Top"
     materialDesign:HintAssist.Hint="Repeat password"
                 materialDesign:TextFieldAssist.HasClearButton="True"
     Style="{StaticResource MaterialDesignFilledRevealPasswordBox}" />
         </StackPanel>
         <StackPanel MinWidth="200" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,50,150">
-            <TextBox x:Name="LastNameTextBox"
+            <TextBox x:Name="LastNameTextBox" PreviewTextInput="TextBox_PreviewTextInput" PreviewKeyDown="TextBox_PreviewKeyDown"
     VerticalAlignment="Top"
     materialDesign:HintAssist.Hint="Фамилия"
     MaxLength="40"
@@ -75,7 +75,7 @@
     TextWrapping="Wrap" />
         </StackPanel>
         <StackPanel MinWidth="200" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,50,0">
-            <TextBox x:Name="FirstNameTextBox"
+            <TextBox x:Name="FirstNameTextBox" PreviewTextInput="TextBox_PreviewTextInput" PreviewKeyDown="TextBox_PreviewKeyDown"
     VerticalAlignment="Top"
     materialDesign:HintAssist.Hint="Имя"
     MaxLength="40"
@@ -83,7 +83,7 @@
     TextWrapping="Wrap" />
         </StackPanel>
         <StackPanel MinWidth="200" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,150,50,0">
-            <TextBox x:Name="PatronymicTextBox"
+            <TextBox x:Name="PatronymicTextBox" PreviewTextInput="TextBox_PreviewTextInput" PreviewKeyDown="TextBox_PreviewKeyDown"
     VerticalAlignment="Top"
     materialDesign:HintAssist.Hint="Отчество"
     MaxLength="40"

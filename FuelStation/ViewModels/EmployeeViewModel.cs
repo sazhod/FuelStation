@@ -11,7 +11,7 @@ namespace FuelStation.ViewModels
 {
     class EmployeeViewModel
     {
-        private Employee employee;
+        public Employee employee;
 
         public EmployeeViewModel(Employee employee) => this.employee = employee;
 
@@ -61,13 +61,15 @@ namespace FuelStation.ViewModels
             }
         }
 
+        public string FullName
+        {
+            get => $"{employee.Firsname} {employee.Lastname} {employee.Patronymic}";
+            
+        }
+
         public List<Role> AllRoles 
         { 
             get => EfCoreDbContext.Instance.Roles.ToList(); 
-            set
-            {
-                Console.WriteLine(value);
-            }
         }
 
         public int RoleId

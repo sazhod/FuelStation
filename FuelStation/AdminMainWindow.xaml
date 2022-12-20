@@ -1,0 +1,120 @@
+﻿<Window x:Class="FuelStation.AdminMainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FuelStation"
+        mc:Ignorable="d"
+        Title="Окно администратора" MinHeight="500" MinWidth="800" Width="800" Height="500"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"    
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}" HorizontalAlignment="Center" VerticalAlignment="Center"
+        >
+    <!--<Window.Resources>
+        <CollectionViewSource x:Key="Roles" Source="{Binding ViewModels.RoleViewModel}" />
+    </Window.Resources>-->
+    <Grid>
+        <materialDesign:Card>
+            <TabControl
+    HorizontalContentAlignment="Center"
+    Style="{StaticResource MaterialDesignFilledTabControl}">
+                <TabItem
+      Header="Приход">
+
+                </TabItem>
+                <TabItem
+      Header="Продажи">
+                    <TextBlock
+        Margin="8"
+        Text="Filled, centered, uniform width, tab 2" />
+                </TabItem>
+                <TabItem
+      Header="Сотрудники">
+                    <Grid>
+                        <DataGrid Margin="8,8,8,70" x:Name="EmployeeDatagrid"
+                              AutoGenerateColumns="False"
+                              CanUserAddRows="False"
+                              ItemsSource="{Binding Source=ViewModels.EmployeeViewModel }"
+                              SelectionMode="Single"
+                              SelectionUnit="FullRow"
+                              ColumnWidth="*"
+                              >
+
+                            <DataGrid.Columns>
+                                <!--Binding="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged}"-->
+                                <DataGridTemplateColumn Width="100" Header="Удалить" IsReadOnly="True">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button x:Name="DeleteEmployeeButton" Click="DeleteEmployeeButton_Click"
+                              Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                              ToolTip="MaterialDesignFloatingActionMiniLightButton" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                <materialDesign:PackIcon Kind="DeleteForever" />
+                                            </Button>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
+                                <DataGridTextColumn Binding="{Binding Lastname}" Header="Фамилия"></DataGridTextColumn>
+                                <DataGridTextColumn Binding="{Binding Firsname}" Header="Имя"></DataGridTextColumn>
+                                <DataGridTextColumn Binding="{Binding Patronymic}" Header="Отчество"></DataGridTextColumn>
+
+                                <materialDesign:DataGridComboBoxColumn
+                                    Header="Должность"
+                                    ItemsSourceBinding="{Binding AllRoles}"
+                                    SelectedValueBinding="{Binding RoleId}"
+                                    SelectedValuePath="Id"
+                                    DisplayMemberPath="Type"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <Button Margin="10"
+                              Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                              ToolTip="MaterialDesignFloatingActionMiniLightButton" VerticalAlignment="Bottom" HorizontalAlignment="Right" Click="Button_Click">
+                            <materialDesign:PackIcon Kind="Plus" />
+                        </Button>
+                    </Grid>
+                </TabItem>
+                <TabItem
+      Header="Должности">
+                    <Grid>
+                        <DataGrid Margin="8,8,8,70" x:Name="RoleDatagrid"
+                              AutoGenerateColumns="False"
+                              CanUserAddRows="False"
+                              ItemsSource="{Binding Source=ViewModels.RoleViewModel }"
+                              SelectionMode="Single"
+                              SelectionUnit="FullRow"
+                              ColumnWidth="*"
+                              >
+
+                            <DataGrid.Columns>
+                                <DataGridTemplateColumn Width="100" Header="Удалить" IsReadOnly="True">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            
+                                            <Button x:Name="DeleteRoleButton"
+                              Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                              ToolTip="MaterialDesignFloatingActionMiniLightButton" VerticalAlignment="Center" HorizontalAlignment="Center" Click="DeleteRoleButton_Click">
+                                                <materialDesign:PackIcon Kind="DeleteForever" />
+                                            </Button>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <!--Binding="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged}"-->
+                                
+
+                                <DataGridTextColumn Binding="{Binding Type}" Header="Должность"></DataGridTextColumn>
+                                <DataGridTextColumn  Binding="{Binding Salary}" Header="З/П"></DataGridTextColumn>
+                                
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <Button Margin="10" x:Name="AddRoleButton"
+                              Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                              ToolTip="MaterialDesignFloatingActionMiniLightButton" VerticalAlignment="Bottom" HorizontalAlignment="Right" Click="AddRoleButton_Click">
+                            <materialDesign:PackIcon Kind="Plus" />
+                        </Button>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+        </materialDesign:Card>
+    </Grid>
+</Window>

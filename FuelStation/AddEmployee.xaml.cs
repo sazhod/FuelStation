@@ -56,8 +56,6 @@ namespace FuelStation
             else if (EfCoreDbContext.Instance.Employees.Where(e => e.Login == LoginTextBox.Text).ToList().Count != 0)
             {
                 errorMessage = "Пользователь с таким логином уже зарегистрирован";
-                LoginTextBox.Text = "";
-                LoginTextBox.BorderBrush = Brushes.Red;
             }
 
             if (!errorMessage.IsNullOrEmpty())
@@ -97,9 +95,21 @@ namespace FuelStation
 
         private void LoginTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (LoginTextBox.BorderBrush == Brushes.Red)
-                //LoginTextBox.BorderBrush = Brushes.;
-                Console.WriteLine(LoginTextBox.BorderBrush);
+           
+        }
+
+        private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (!int.TryParse(e.Text, out var salary))
+                e.Handled = true;
+        }
+
+        private void TextBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Space)
+            {
+                e.Handled = true;
+            }
         }
     }
 }

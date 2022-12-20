@@ -1,0 +1,256 @@
+﻿<Window x:Class="FuelStation.ManagerMainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FuelStation"
+        mc:Ignorable="d"
+        Title="Окно менеджера" MinHeight="500" MinWidth="800" Width="800" Height="500"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"    
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}" HorizontalAlignment="Center" VerticalAlignment="Center"
+        >
+    <Grid>
+        <materialDesign:Card>
+            <TabControl
+    HorizontalContentAlignment="Center"
+    Style="{StaticResource MaterialDesignFilledTabControl}">
+                <TabItem
+      Header="Приход">
+                    <Grid>
+                        <DataGrid Margin="8,8,8,70" x:Name="SuppliesDatagrid"
+                              AutoGenerateColumns="False"
+                              CanUserAddRows="False"
+                              ItemsSource="{Binding Source=ViewModels.EmployeeViewModel }"
+                              SelectionMode="Single"
+                              SelectionUnit="FullRow"
+                              ColumnWidth="*"
+                              >
+
+                            <DataGrid.Columns>
+                                <!--Binding="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged}"-->
+                                <DataGridTemplateColumn Width="100" Header="Удалить" IsReadOnly="True">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button x:Name="DeleteEmployeeButton" 
+                              Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                              ToolTip="MaterialDesignFloatingActionMiniLightButton" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                <materialDesign:PackIcon Kind="DeleteForever" />
+                                            </Button>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
+                                <DataGridTextColumn Binding="{Binding Lastname}" Header="Фамилия"></DataGridTextColumn>
+                                <DataGridTextColumn Binding="{Binding Firsname}" Header="Имя"></DataGridTextColumn>
+                                <DataGridTextColumn Binding="{Binding Patronymic}" Header="Отчество"></DataGridTextColumn>
+
+                                <materialDesign:DataGridComboBoxColumn
+                                    Header="Должность"
+                                    ItemsSourceBinding="{Binding AllRoles}"
+                                    SelectedValueBinding="{Binding RoleId}"
+                                    SelectedValuePath="Id"
+                                    DisplayMemberPath="Type"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <Button Margin="10"
+                              Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                              ToolTip="MaterialDesignFloatingActionMiniLightButton" VerticalAlignment="Bottom" HorizontalAlignment="Right" >
+                            <materialDesign:PackIcon Kind="Plus" />
+                        </Button>
+                    </Grid>
+                </TabItem>
+                <TabItem
+      Header="Новый приход">
+
+                    <Grid>
+
+                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,347">
+                            <ComboBox
+                ItemsSource="{Binding Source=ViewModels.EmployeeViewModel}"
+                x:Name="ReceivingEmployeeComboBox"
+                Width="350"
+                materialDesign:HintAssist.Hint="Принимающий сотрудник"
+                Style="{StaticResource MaterialDesignFilledComboBox}">
+
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding FullName}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+
+                            </ComboBox>
+                        </StackPanel>
+                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,250">
+                            <ComboBox
+                ItemsSource="{Binding Source=ViewModels.EmployeeViewModel}"
+                x:Name="BringingEmployeeComboBox"
+                Width="350"
+                materialDesign:HintAssist.Hint="Доставляющий сотрудник"
+                Style="{StaticResource MaterialDesignFilledComboBox}">
+
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding FullName}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+
+                            </ComboBox>
+                        </StackPanel>
+                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,150">
+                            <ComboBox
+                ItemsSource="{Binding Source=ViewModels.VendorViewModel}"
+                x:Name="VendorComboBox"
+                Width="350"
+                materialDesign:HintAssist.Hint="Производитель"
+                Style="{StaticResource MaterialDesignFilledComboBox}"
+                                SelectionChanged="VendorComboBox_SelectionChanged">
+
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Name}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+
+                            </ComboBox>
+                        </StackPanel>
+                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,50">
+                            <ComboBox
+                ItemsSource="{Binding Source=ViewModels.FuelViewModel}"
+                x:Name="FuelComboBox"
+                Width="350"
+                materialDesign:HintAssist.Hint="Топливо"
+                Style="{StaticResource MaterialDesignFilledComboBox}">
+
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Name}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+
+                            </ComboBox>
+                        </StackPanel>
+
+                        
+
+                        <StackPanel MinWidth="200" HorizontalAlignment="Center" VerticalAlignment="Center" Width="256" Margin="0,0,0,-150">
+                            <TextBox x:Name="QuantityTextBox"
+                    PreviewTextInput="TextBox_PreviewTextInput" PreviewKeyDown="TextBox_PreviewKeyDown"
+    VerticalAlignment="Top"
+    materialDesign:HintAssist.Hint="Количество"
+    MaxLength="40"
+    Style="{StaticResource MaterialDesignFilledTextBox}"
+    TextWrapping="Wrap" />
+                        </StackPanel>
+
+                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,-300">
+                            <Button x:Name="AddFuelSuppliesButton" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="200" MinHeight="32"
+    materialDesign:ButtonAssist.CornerRadius="10"
+    Style="{StaticResource MaterialDesignRaisedButton}" Click="AddFuelSuppliesButton_Click" >
+                                <TextBlock
+      Text="Добавить" />
+                            </Button>
+                        </StackPanel>
+
+                    </Grid>
+
+                </TabItem>
+                <TabItem
+      Header="Продажи">
+                    <Grid>
+                        <DataGrid Margin="8,8,8,70" x:Name="EmployeeDatagrid"
+                              AutoGenerateColumns="False"
+                              CanUserAddRows="False"
+                              ItemsSource="{Binding Source=ViewModels.EmployeeViewModel }"
+                              SelectionMode="Single"
+                              SelectionUnit="FullRow"
+                              ColumnWidth="*"
+                              >
+
+                            <DataGrid.Columns>
+                                <!--Binding="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged}"-->
+                                <DataGridTemplateColumn Width="100" Header="Удалить" IsReadOnly="True">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button x:Name="DeleteEmployeeButton" 
+                              Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                              ToolTip="MaterialDesignFloatingActionMiniLightButton" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                <materialDesign:PackIcon Kind="DeleteForever" />
+                                            </Button>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
+                                <DataGridTextColumn Binding="{Binding Lastname}" Header="Фамилия"></DataGridTextColumn>
+                                <DataGridTextColumn Binding="{Binding Firsname}" Header="Имя"></DataGridTextColumn>
+                                <DataGridTextColumn Binding="{Binding Patronymic}" Header="Отчество"></DataGridTextColumn>
+
+                                <materialDesign:DataGridComboBoxColumn
+                                    Header="Должность"
+                                    ItemsSourceBinding="{Binding AllRoles}"
+                                    SelectedValueBinding="{Binding RoleId}"
+                                    SelectedValuePath="Id"
+                                    DisplayMemberPath="Type"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <Button Margin="10"
+                              Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                              ToolTip="MaterialDesignFloatingActionMiniLightButton" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+                            <materialDesign:PackIcon Kind="Plus" />
+                        </Button>
+                    </Grid>
+                </TabItem>
+                <TabItem
+      Header="Новая продажа">
+                    <Grid>
+                        <DataGrid Margin="8,8,8,70" x:Name="RoleDatagrid"
+                              AutoGenerateColumns="False"
+                              CanUserAddRows="False"
+                              ItemsSource="{Binding Source=ViewModels.RoleViewModel }"
+                              SelectionMode="Single"
+                              SelectionUnit="FullRow"
+                              ColumnWidth="*"
+                              >
+
+                            <DataGrid.Columns>
+                                <DataGridTemplateColumn Width="100" Header="Удалить" IsReadOnly="True">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+
+                                            <Button x:Name="DeleteRoleButton"
+                              Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                              ToolTip="MaterialDesignFloatingActionMiniLightButton" VerticalAlignment="Center" HorizontalAlignment="Center" >
+                                                <materialDesign:PackIcon Kind="DeleteForever" />
+                                            </Button>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <!--Binding="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged}"-->
+
+
+                                <DataGridTextColumn Binding="{Binding Type}" Header="Должность"></DataGridTextColumn>
+                                <DataGridTextColumn  Binding="{Binding Salary}" Header="З/П"></DataGridTextColumn>
+
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <Button Margin="10" x:Name="AddRoleButton"
+                              Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                              ToolTip="MaterialDesignFloatingActionMiniLightButton" VerticalAlignment="Bottom" HorizontalAlignment="Right" Cursor="Hand" >
+                            <materialDesign:PackIcon Kind="Plus" />
+                        </Button>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+        </materialDesign:Card>
+    </Grid>
+</Window>

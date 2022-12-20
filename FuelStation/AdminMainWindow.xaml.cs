@@ -19,7 +19,7 @@ namespace FuelStation
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class AdminMainWindow : Window
     {
         private List<EmployeeViewModel> employeeViewModel 
         { 
@@ -49,7 +49,7 @@ namespace FuelStation
             }
         }
 
-        public MainWindow()
+        public AdminMainWindow()
         {
             InitializeComponent();
             FillingDataGrid();
@@ -58,6 +58,7 @@ namespace FuelStation
         public void FillingDataGrid()
         {
             EmployeeDatagrid.ItemsSource = employeeViewModel;
+            RoleDatagrid.ItemsSource = roleViewModels;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -65,6 +66,46 @@ namespace FuelStation
             AddEmployee addEmployee = new AddEmployee();
             var result = addEmployee.ShowDialog();
             FillingDataGrid();
+        }
+
+        private void AddRoleButton_Click(object sender, RoutedEventArgs e)
+        {
+            AddRole addRole = new AddRole();
+            var result = addRole.ShowDialog();
+            FillingDataGrid();
+        }
+
+        private void DeleteRoleButton_Click(object sender, RoutedEventArgs e)
+        {
+            ConfirmationDeleteMessageBox confirmationDeleteMessageBox = new ConfirmationDeleteMessageBox();
+            if (confirmationDeleteMessageBox.ShowDialog() == true)
+            {
+                Role removingRole = ((RoleViewModel)((Button)sender).DataContext).role;
+
+                EfCoreDbContext.Instance.Roles.Remove(removingRole);
+                EfCoreDbContext.Instance.SaveChanges();
+                FillingDataGrid();
+            }
+        }
+
+        private void DeleteEmployeeButton_Click(object sender, RoutedEventArgs e)
+        {
+            ConfirmationDeleteMessageBox confirmationDeleteMessageBox = new ConfirmationDeleteMessageBox();
+            if (confirmationDeleteMessageBox.ShowDialog() == true)
+            {
+                Employee removingEmployee = ((EmployeeViewModel)((Button)sender).DataContext).employee;
+
+                if (removingEmployee.IdroleNavigation.Id == 1)
+                {
+                    CustomMessageBox customMessageBox = new CustomMessageBox("Вы не можете удалить администратора! Данное действие можно выполнить только из БД!");
+                    customMessageBox.ShowDialog();
+                    return;
+                }
+
+                EfCoreDbContext.Instance.Employees.Remove(removingEmployee);
+                EfCoreDbContext.Instance.SaveChanges();
+                FillingDataGrid();
+            }
         }
     }
 }
