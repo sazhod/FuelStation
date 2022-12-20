@@ -12,6 +12,9 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}" HorizontalAlignment="Center" VerticalAlignment="Center"
         >
+    <Window.Resources>
+        <CollectionViewSource x:Key="Roles" Source="{Binding ViewModels.RoleViewModel}" />
+    </Window.Resources>
     <Grid>
         <materialDesign:Card>
             <TabControl
@@ -33,16 +36,16 @@
                         <DataGrid Margin="8,8,8,70" x:Name="EmployeeDatagrid"
                               AutoGenerateColumns="False"
                               CanUserAddRows="False"
-                              ItemsSource="{Binding Source=ViewModels.EmployeeViewModel}"
+                              ItemsSource="{Binding Source=ViewModels.EmployeeViewModel }"
                               SelectionMode="Single"
                               SelectionUnit="FullRow"
                               ColumnWidth="*"
                               >
 
                             <DataGrid.Columns>
-
+                                <!--Binding="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged}"-->
                                 <DataGridCheckBoxColumn IsReadOnly="False"
-                                  Binding="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged}"
+                                  
                                   EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}"
                                   ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}">
                                     <DataGridCheckBoxColumn.Header>
@@ -62,33 +65,25 @@
                                         </Style>
                                     </DataGridCheckBoxColumn.HeaderStyle>
                                 </DataGridCheckBoxColumn>
-
+                                
                                 <DataGridTextColumn Binding="{Binding Lastname}" Header="Фамилия"></DataGridTextColumn>
                                 <DataGridTextColumn Binding="{Binding Firsname}" Header="Имя"></DataGridTextColumn>
                                 <DataGridTextColumn Binding="{Binding Patronymic}" Header="Отчество"></DataGridTextColumn>
-                                <DataGridTextColumn Binding="{Binding _Role}" Header="Должность"></DataGridTextColumn>
-                                <DataGridComboBoxColumn Header="Должность"
-                                  ItemsSource="{Binding AllRole}">
-                                </DataGridComboBoxColumn>
+                               
                                 <materialDesign:DataGridComboBoxColumn
-      Header="Должность"
-      ItemsSourceBinding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}, Path=EmployeeVewModel.AllRole}"
-      SelectedValueBinding="{Binding Role}" />
+                                    Header="Должность"
+                                    ItemsSourceBinding="{Binding AllRoles}"
+                                    SelectedValueBinding="{Binding RoleId}"
+                                    SelectedValuePath="Id"
+                                    DisplayMemberPath="Type"/>
                             </DataGrid.Columns>
-
                         </DataGrid>
-
                         <Button Margin="10"
-  Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
-  ToolTip="MaterialDesignFloatingActionMiniLightButton" VerticalAlignment="Bottom" HorizontalAlignment="Right" Click="Button_Click">
-                            <materialDesign:PackIcon
-
-    Kind="Plus" />
+                              Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                              ToolTip="MaterialDesignFloatingActionMiniLightButton" VerticalAlignment="Bottom" HorizontalAlignment="Right" Click="Button_Click">
+                            <materialDesign:PackIcon Kind="Plus" />
                         </Button>
-                        
                     </Grid>
-                   
-
                 </TabItem>
                 <TabItem
       Header="TAB 4">

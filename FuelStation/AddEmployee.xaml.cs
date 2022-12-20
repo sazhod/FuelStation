@@ -35,7 +35,7 @@ namespace FuelStation
                 return roles;
             }
         }
-        
+
         public AddEmployee()
         {
             InitializeComponent();
@@ -53,6 +53,12 @@ namespace FuelStation
                 errorMessage = "Введён слишком которокий лоигн!(Минимум 5 символов)";
             else if (!PasswordBox.Password.Equals(RepeatPasswordBox.Password))
                 errorMessage = "Пароли не совпадают!";
+            else if (EfCoreDbContext.Instance.Employees.Where(e => e.Login == LoginTextBox.Text).ToList().Count != 0)
+            {
+                errorMessage = "Пользователь с таким логином уже зарегистрирован";
+                LoginTextBox.Text = "";
+                LoginTextBox.BorderBrush = Brushes.Red;
+            }
 
             if (!errorMessage.IsNullOrEmpty())
             {
@@ -87,6 +93,13 @@ namespace FuelStation
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void LoginTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (LoginTextBox.BorderBrush == Brushes.Red)
+                //LoginTextBox.BorderBrush = Brushes.;
+                Console.WriteLine(LoginTextBox.BorderBrush);
         }
     }
 }

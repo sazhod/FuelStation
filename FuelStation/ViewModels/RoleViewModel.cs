@@ -13,7 +13,7 @@ namespace FuelStation.ViewModels
 
         public RoleViewModel(Role role) => this.role = role;
       
-        private int Id { get => role.Id; }
+        public int Id { get => role.Id; }
         public string Type { get => role.Type; }
         public int Salary { get => role.Salary; }
     }

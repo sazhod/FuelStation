@@ -43,6 +43,7 @@
         </StackPanel>
         <StackPanel MinWidth="200" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="50,0,0,150">
             <TextBox x:Name="LoginTextBox"
+                     TextChanged="LoginTextBox_TextChanged"
     VerticalAlignment="Top"
     materialDesign:HintAssist.Hint="Login"
     MaxLength="40"

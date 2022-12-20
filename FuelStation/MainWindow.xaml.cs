@@ -21,7 +21,9 @@ namespace FuelStation
     /// </summary>
     public partial class MainWindow : Window
     {
-        private List<EmployeeViewModel> employeeViewModel { get
+        private List<EmployeeViewModel> employeeViewModel 
+        { 
+            get
             {
                 var tempEmployees = EfCoreDbContext.Instance.Employees.ToList();
                 List<EmployeeViewModel> employees = new List<EmployeeViewModel>();
@@ -30,6 +32,20 @@ namespace FuelStation
                     employees.Add(new EmployeeViewModel(tempEmployees[i]));
                 }
                 return employees;
+            }
+        }
+
+        private List<RoleViewModel> roleViewModels
+        {
+            get 
+            {
+                var tempRoles = EfCoreDbContext.Instance.Roles.ToList();
+                List<RoleViewModel> roles = new List<RoleViewModel>();
+                for (int i = 0; i < tempRoles.Count; i++)
+                {
+                    roles.Add(new RoleViewModel(tempRoles[i]));
+                }
+                return roles;
             }
         }
 

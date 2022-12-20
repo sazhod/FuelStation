@@ -1,6 +1,7 @@
 ﻿using FuelStation.Models.Entities;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -60,10 +61,24 @@ namespace FuelStation.ViewModels
             }
         }
 
-        private int Idrole { get => employee.Idrole; }
-        public string _Role { get => employee.IdroleNavigation.Type; }
-        public List<Role> AllRole { get => EfCoreDbContext.Instance.Roles.ToList(); }
-        public Role SelectedRole { get => AllRole.Single(r => r.Id == employee.Idrole); }
+        public List<Role> AllRoles 
+        { 
+            get => EfCoreDbContext.Instance.Roles.ToList(); 
+            set
+            {
+                Console.WriteLine(value);
+            }
+        }
+
+        public int RoleId
+        {
+            get => employee.IdroleNavigation.Id;
+            set
+            {
+                employee.IdroleNavigation = EfCoreDbContext.Instance.Roles.Single(r => r.Id == value);
+                SaveChanges();
+            }
+        }
 
         private void SaveChanges()
         {
