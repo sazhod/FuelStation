@@ -20,6 +20,11 @@ namespace FuelStation.Models.Entities
         public string Login { get; set; } = null!;
         public string Password { get; set; } = null!;
 
+        public string FullName
+        {
+            get => $"{Lastname} {Firsname} {Patronymic}";
+        }
+
         public virtual Role IdroleNavigation { get; set; } = null!;
         public virtual ICollection<FuelSale> FuelSales { get; set; }
         public virtual ICollection<FuelSupply> FuelSupplyIdBringingEmployeeNavigations { get; set; }

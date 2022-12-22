@@ -78,6 +78,20 @@ namespace FuelStation
             }
         }
 
+        private List<FuelSuppliesViewModel> fuelSuppliesViewModels
+        {
+            get
+            {
+                var tempFuelSupplies = EfCoreDbContext.Instance.FuelSupplies.ToList();
+                List<FuelSuppliesViewModel> fuelSupplies = new List<FuelSuppliesViewModel>();
+                for (int i = 0; i < tempFuelSupplies.Count; i++)
+                {
+                    fuelSupplies.Add(new FuelSuppliesViewModel(tempFuelSupplies[i]));
+                }
+                return fuelSupplies;
+            }
+        }
+
         public ManagerMainWindow()
         {
             InitializeComponent();
@@ -89,6 +103,7 @@ namespace FuelStation
             ReceivingEmployeeComboBox.ItemsSource = receivingEmployeeViewModel;
             BringingEmployeeComboBox.ItemsSource = bringingEmployeeViewModel;
             VendorComboBox.ItemsSource = vendorViewModel;
+            FuelSuppliesDatagrid.ItemsSource = fuelSuppliesViewModels;
         }
 
         private bool AddFuelSuppliesValidate()

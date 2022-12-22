@@ -20,10 +20,10 @@
                 <TabItem
       Header="Приход">
                     <Grid>
-                        <DataGrid Margin="8,8,8,70" x:Name="SuppliesDatagrid"
+                        <DataGrid Margin="8,8,8,70" x:Name="FuelSuppliesDatagrid"
                               AutoGenerateColumns="False"
                               CanUserAddRows="False"
-                              ItemsSource="{Binding Source=ViewModels.EmployeeViewModel }"
+                              ItemsSource="{Binding Source=ViewModels.FuelSuppliesViewModel }"
                               SelectionMode="Single"
                               SelectionUnit="FullRow"
                               ColumnWidth="*"
@@ -43,16 +43,34 @@
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
 
-                                <DataGridTextColumn Binding="{Binding Lastname}" Header="Фамилия"></DataGridTextColumn>
-                                <DataGridTextColumn Binding="{Binding Firsname}" Header="Имя"></DataGridTextColumn>
-                                <DataGridTextColumn Binding="{Binding Patronymic}" Header="Отчество"></DataGridTextColumn>
+                                <materialDesign:DataGridComboBoxColumn
+                                    Header="Принимающий"
+                                    ItemsSourceBinding="{Binding AllEmployees}"
+                                    SelectedValueBinding="{Binding ReceivingEmployeeId}"
+                                    SelectedValuePath="Id"
+                                    DisplayMemberPath="FullName"/>
 
                                 <materialDesign:DataGridComboBoxColumn
-                                    Header="Должность"
-                                    ItemsSourceBinding="{Binding AllRoles}"
-                                    SelectedValueBinding="{Binding RoleId}"
+                                    Header="Привозящий"
+                                    ItemsSourceBinding="{Binding AllEmployees}"
+                                    SelectedValueBinding="{Binding BringingEmployeeId}"
                                     SelectedValuePath="Id"
-                                    DisplayMemberPath="Type"/>
+                                    DisplayMemberPath="FullName">
+
+                                </materialDesign:DataGridComboBoxColumn>
+
+                                <DataGridTextColumn Binding="{Binding Datetime}" Header="Дата"></DataGridTextColumn>
+
+                                <materialDesign:DataGridComboBoxColumn
+                                    Header="Топливо"
+                                    ItemsSourceBinding="{Binding AllFuels}"
+                                    SelectedValueBinding="{Binding FuelId}"
+                                    SelectedValuePath="Id"
+                                    DisplayMemberPath="Name">
+
+                                </materialDesign:DataGridComboBoxColumn>
+
+                                <DataGridTextColumn Binding="{Binding Quantity}" Header="Количество"></DataGridTextColumn>
                             </DataGrid.Columns>
                         </DataGrid>
                         <Button Margin="10"
