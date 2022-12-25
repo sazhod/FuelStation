@@ -34,7 +34,7 @@
                                 <DataGridTemplateColumn Width="100" Header="Удалить" IsReadOnly="True">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <Button x:Name="DeleteEmployeeButton" 
+                                            <Button x:Name="DeleteFuelSupplyButton" Click="DeleteFuelSupplyButton_Click"
                               Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
                               ToolTip="MaterialDesignFloatingActionMiniLightButton" VerticalAlignment="Center" HorizontalAlignment="Center">
                                                 <materialDesign:PackIcon Kind="DeleteForever" />
@@ -59,7 +59,17 @@
 
                                 </materialDesign:DataGridComboBoxColumn>
 
-                                <DataGridTextColumn Binding="{Binding Datetime}" Header="Дата"></DataGridTextColumn>
+                                <DataGridTextColumn IsReadOnly="True" Binding="{Binding Datetime}" Header="Дата"></DataGridTextColumn>
+
+                                <materialDesign:DataGridComboBoxColumn
+                                    x:Name="VendorDataGridComboBoxColumn"
+                                    Header="Производитель"
+                                    ItemsSourceBinding="{Binding AllVenders}"
+                                    SelectedValueBinding="{Binding VendorId}"
+                                    SelectedValuePath="Id"
+                                    DisplayMemberPath="Name">
+
+                                </materialDesign:DataGridComboBoxColumn>
 
                                 <materialDesign:DataGridComboBoxColumn
                                     Header="Топливо"
@@ -166,7 +176,7 @@
                     PreviewTextInput="TextBox_PreviewTextInput" PreviewKeyDown="TextBox_PreviewKeyDown"
     VerticalAlignment="Top"
     materialDesign:HintAssist.Hint="Количество"
-    MaxLength="40"
+    MaxLength="10"
     Style="{StaticResource MaterialDesignFilledTextBox}"
     TextWrapping="Wrap" />
                         </StackPanel>

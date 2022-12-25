@@ -140,8 +140,11 @@ namespace FuelStation
 
         private void VendorComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Vendor vendor = ((VendorViewModel)((ComboBox)sender).SelectedItem).vendor;
-            FuelComboBox.ItemsSource = EfCoreDbContext.Instance.Fuels.Where(f => f.IdvendorNavigation.Id == vendor.Id).ToList();
+            if (((ComboBox)sender).SelectedItem != null)
+            {
+                Vendor vendor = ((VendorViewModel)((ComboBox)sender).SelectedItem).vendor;
+                FuelComboBox.ItemsSource = EfCoreDbContext.Instance.Fuels.Where(f => f.IdvendorNavigation.Id == vendor.Id).ToList();
+            }
         }
 
         private void AddFuelSuppliesButton_Click(object sender, RoutedEventArgs e)
@@ -166,6 +169,7 @@ namespace FuelStation
             CustomMessageBox customMessageBox = new CustomMessageBox("Новый приход товара успешно зарегистрирован!");
             customMessageBox.ShowDialog();
             ClearData();
+            FillComboBox();
         }
 
         private void ClearData()
@@ -175,6 +179,20 @@ namespace FuelStation
             VendorComboBox.SelectedIndex = -1;
             FuelComboBox.SelectedIndex = -1;
             QuantityTextBox.Text = "";
+        }
+
+        private void DeleteFuelSupplyButton_Click(object sender, RoutedEventArgs e)
+        {
+            ConfirmationDeleteMessageBox confirmationDeleteMessageBox = new ConfirmationDeleteMessageBox();
+            if (confirmationDeleteMessageBox.ShowDialog() == true)
+            {
+                //Role removingRole = ((RoleViewModel)((Button)sender).DataContext).role;
+                var removingFuelSupply = ((FuelSuppliesViewModel)((Button)sender).DataContext).fuelSupply;
+
+                EfCoreDbContext.Instance.FuelSupplies.Remove(removingFuelSupply);
+                EfCoreDbContext.Instance.SaveChanges();
+                FillComboBox();
+            }
         }
     }
 }

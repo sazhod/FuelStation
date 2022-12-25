@@ -11,12 +11,17 @@ namespace FuelStation.ViewModels
     {
         public FuelSupply fuelSupply;
 
-        public FuelSuppliesViewModel(FuelSupply fuelSupply) => this.fuelSupply = fuelSupply;
+        public FuelSuppliesViewModel(FuelSupply fuelSupply)
+        {
+            this.fuelSupply = fuelSupply;
+            SelectedVendor = fuelSupply.IdfuelNavigation.IdvendorNavigation;
+            allFuels = EfCoreDbContext.Instance.Fuels.Where(f => f.IdvendorNavigation.Id == SelectedVendor.Id).ToList();
+        }
 
         public int Id { get; set; }
         public int IdReceivingEmployee { get; set; }
         public int IdBringingEmployee { get; set; }
-        public DateTime Datetime { get; set; }
+        public string Datetime { get => fuelSupply.Datetime.ToString("dd.MM.yyyy HH:mm:ss"); }
         public int Idfuel { get; set; }
         public int Quantity { get; set; }
 
@@ -42,7 +47,9 @@ namespace FuelStation.ViewModels
             }
         }
 
-        public List<Fuel> AllFuels { get => EfCoreDbContext.Instance.Fuels.ToList(); }
+        public List<Fuel> AllFuels { get => allFuels; set => allFuels = value; }
+        private List<Fuel> allFuels;
+
 
         public int FuelId
         {
@@ -53,6 +60,21 @@ namespace FuelStation.ViewModels
                 SaveChanges();
             }
         }
+
+        public List<Vendor> AllVenders { get => EfCoreDbContext.Instance.Vendors.ToList(); }
+
+        public int VendorId
+        {
+            get => SelectedVendor.Id;
+            set
+            {
+                //fuelSupply.IdfuelNavigation.IdvendorNavigation = EfCoreDbContext.Instance.Vendors.Single(v => v.Id == value);
+                SelectedVendor = EfCoreDbContext.Instance.Vendors.Single(v => v.Id == value);
+                AllFuels = EfCoreDbContext.Instance.Fuels.Where(f => f.IdvendorNavigation.Id == SelectedVendor.Id).ToList();
+            }
+        }
+
+        public Vendor SelectedVendor { get; set; }
 
         private void SaveChanges()
         {
