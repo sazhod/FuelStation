@@ -30,7 +30,7 @@ namespace FuelStation.ViewModels
             get => employee.Firsname; 
             set
             {
-                employee.Lastname = value;
+                employee.Firsname = value;
                 SaveChanges();
             }
         }
@@ -38,7 +38,7 @@ namespace FuelStation.ViewModels
             get => employee.Patronymic; 
             set
             {
-                employee.Lastname = value;
+                employee.Patronymic = value;
                 SaveChanges();
             }
         }

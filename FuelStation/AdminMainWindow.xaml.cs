@@ -49,6 +49,63 @@ namespace FuelStation
             }
         }
 
+        private List<FuelSuppliesViewModel> fuelSuppliesViewModels
+        {
+            get
+            {
+                var tempFuelSupplies = EfCoreDbContext.Instance.FuelSupplies.ToList();
+                List<FuelSuppliesViewModel> fuelSupplies = new List<FuelSuppliesViewModel>();
+                for (int i = 0; i < tempFuelSupplies.Count; i++)
+                {
+                    fuelSupplies.Add(new FuelSuppliesViewModel(tempFuelSupplies[i]));
+                }
+                return fuelSupplies;
+            }
+        }
+
+        private List<EmployeeViewModel> salesEmployeeViewModel
+        {
+            get
+            {
+                var tempEmployees = EfCoreDbContext.Instance.Employees.Where(e => e.IdroleNavigation.Id == 3).ToList();
+                List<EmployeeViewModel> employees = new List<EmployeeViewModel>();
+                for (int i = 0; i < tempEmployees.Count; i++)
+                {
+                    employees.Add(new EmployeeViewModel(tempEmployees[i]));
+                }
+                return employees;
+            }
+        }
+
+        private List<VendorViewModel> vendorViewModel
+        {
+            get
+            {
+                var tempVendor = EfCoreDbContext.Instance.Vendors.ToList();
+                List<VendorViewModel> vendors = new List<VendorViewModel>();
+                for (int i = 0; i < tempVendor.Count; i++)
+                {
+                    vendors.Add(new VendorViewModel(tempVendor[i]));
+                }
+                return vendors;
+            }
+        }
+
+
+        private List<FuelSaleViewModel> fuelSaleViewModels
+        {
+            get
+            {
+                var tempFuelSale = EfCoreDbContext.Instance.FuelSales.ToList();
+                List<FuelSaleViewModel> fuelSales = new List<FuelSaleViewModel>();
+                for (int i = 0; i < tempFuelSale.Count; i++)
+                {
+                    fuelSales.Add(new FuelSaleViewModel(tempFuelSale[i]));
+                }
+                return fuelSales;
+            }
+        }
+
         public AdminMainWindow()
         {
             InitializeComponent();
@@ -59,6 +116,8 @@ namespace FuelStation
         {
             EmployeeDatagrid.ItemsSource = employeeViewModel;
             RoleDatagrid.ItemsSource = roleViewModels;
+            FuelSuppliesDatagrid.ItemsSource = fuelSuppliesViewModels;
+            FuelSalesDatagrid.ItemsSource = fuelSaleViewModels;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -106,6 +165,37 @@ namespace FuelStation
                 EfCoreDbContext.Instance.SaveChanges();
                 FillingDataGrid();
             }
+        }
+
+        private void DeleteFuelSupplyButton_Click(object sender, RoutedEventArgs e)
+        {
+            ConfirmationDeleteMessageBox confirmationDeleteMessageBox = new ConfirmationDeleteMessageBox();
+            if (confirmationDeleteMessageBox.ShowDialog() == true)
+            {
+                var removingFuelSupply = ((FuelSuppliesViewModel)((Button)sender).DataContext).fuelSupply;
+
+                EfCoreDbContext.Instance.FuelSupplies.Remove(removingFuelSupply);
+                EfCoreDbContext.Instance.SaveChanges();
+                FillingDataGrid();
+            }
+        }
+
+        private void DeleteFuelSaleButton_Click(object sender, RoutedEventArgs e)
+        {
+            ConfirmationDeleteMessageBox confirmationDeleteMessageBox = new ConfirmationDeleteMessageBox();
+            if (confirmationDeleteMessageBox.ShowDialog() == true)
+            {
+                var removingFuelSale = ((FuelSaleViewModel)((Button)sender).DataContext).fuelSale;
+
+                EfCoreDbContext.Instance.FuelSales.Remove(removingFuelSale);
+                EfCoreDbContext.Instance.SaveChanges();
+                FillingDataGrid();
+            }
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            Application.Current.MainWindow.Show();
         }
     }
 }

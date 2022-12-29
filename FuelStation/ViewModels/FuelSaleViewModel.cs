@@ -7,50 +7,51 @@ using System.Threading.Tasks;
 
 namespace FuelStation.ViewModels
 {
-    class FuelSuppliesViewModel
+    internal class FuelSaleViewModel
     {
-        public FuelSupply fuelSupply;
+        public FuelSale fuelSale;
 
-        public FuelSuppliesViewModel(FuelSupply fuelSupply)
+        public FuelSaleViewModel(FuelSale fuelSale)
         {
-            this.fuelSupply = fuelSupply;
-            SelectedVendor = fuelSupply.IdfuelNavigation.IdvendorNavigation;
+            this.fuelSale = fuelSale;
+            SelectedVendor = fuelSale.IdfuelNavigation.IdvendorNavigation;
             allFuels = EfCoreDbContext.Instance.Fuels.Where(f => f.IdvendorNavigation.Id == SelectedVendor.Id).ToList();
         }
 
-        public int Id { get; set; }
-        public int IdReceivingEmployee { get; set; }
-        public int IdBringingEmployee { get; set; }
-        public string Datetime { get => fuelSupply.Datetime.ToString("dd.MM.yyyy HH:mm:ss"); }
+        public int Id { get => fuelSale.Id; }
+        public int Idemployee { get; set; }
         public int Idfuel { get; set; }
-        public double Quantity 
+        public string Datetime { get => fuelSale.Datetime.ToString("dd.MM.yyyy HH:mm:ss"); }
+        public decimal Quantity 
         { 
-            get => fuelSupply.Quantity; 
+            get => fuelSale.Quantity;
             set
             {
-                fuelSupply.Quantity = value;
+                fuelSale.Quantity = value;
                 SaveChanges();
-            } 
+            }
         }
-
-        public List<Employee> AllEmployees { get => EfCoreDbContext.Instance.Employees.ToList(); }
-
-        public int ReceivingEmployeeId
+        public double Totalcost 
         {
-            get => fuelSupply.IdReceivingEmployeeNavigation.Id;
+            get => fuelSale.Totalcost;
             set
             {
-                fuelSupply.IdReceivingEmployeeNavigation = EfCoreDbContext.Instance.Employees.Single(e => e.Id == value);
+                fuelSale.Totalcost = value;
                 SaveChanges();
             }
         }
 
-        public int BringingEmployeeId
+        public List<Employee> AllEmployees
         {
-            get => fuelSupply.IdBringingEmployeeNavigation.Id;
+            get => EfCoreDbContext.Instance.Employees.ToList();
+        }
+
+        public int EmployeeId
+        {
+            get => fuelSale.IdemployeeNavigation.Id;
             set
             {
-                fuelSupply.IdBringingEmployeeNavigation = EfCoreDbContext.Instance.Employees.Single(e => e.Id == value);
+                fuelSale.IdemployeeNavigation = EfCoreDbContext.Instance.Employees.Single(e => e.Id == value);
                 SaveChanges();
             }
         }
@@ -61,10 +62,10 @@ namespace FuelStation.ViewModels
 
         public int FuelId
         {
-            get => fuelSupply.IdfuelNavigation.Id;
+            get => fuelSale.IdfuelNavigation.Id;
             set
             {
-                fuelSupply.IdfuelNavigation = EfCoreDbContext.Instance.Fuels.Single(f => f.Id == value);
+                fuelSale.IdfuelNavigation = EfCoreDbContext.Instance.Fuels.Single(f => f.Id == value);
                 SaveChanges();
             }
         }
@@ -85,7 +86,7 @@ namespace FuelStation.ViewModels
 
         private void SaveChanges()
         {
-            EfCoreDbContext.Instance.FuelSupplies.Update(fuelSupply);
+            EfCoreDbContext.Instance.FuelSales.Update(fuelSale);
             EfCoreDbContext.Instance.SaveChanges();
         }
     }

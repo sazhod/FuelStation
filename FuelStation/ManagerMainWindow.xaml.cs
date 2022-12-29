@@ -26,7 +26,7 @@ namespace FuelStation
         {
             get
             {
-                var tempEmployees = EfCoreDbContext.Instance.Employees.Where(e => e.IdroleNavigation.Id == 4).ToList();
+                var tempEmployees = EfCoreDbContext.Instance.Employees.Where(e => e.IdroleNavigation.Id == 2).ToList();
                 List<EmployeeViewModel> employees = new List<EmployeeViewModel>();
                 for (int i = 0; i < tempEmployees.Count; i++)
                 {
@@ -40,7 +40,7 @@ namespace FuelStation
         {
             get
             {
-                var tempEmployees = EfCoreDbContext.Instance.Employees.Where(e => e.IdroleNavigation.Id == 2).ToList();
+                var tempEmployees = EfCoreDbContext.Instance.Employees.Where(e => e.IdroleNavigation.Id == 4).ToList();
                 List<EmployeeViewModel> employees = new List<EmployeeViewModel>();
                 for (int i = 0; i < tempEmployees.Count; i++)
                 {
@@ -193,6 +193,11 @@ namespace FuelStation
                 EfCoreDbContext.Instance.SaveChanges();
                 FillComboBox();
             }
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            Application.Current.MainWindow.Show();
         }
     }
 }

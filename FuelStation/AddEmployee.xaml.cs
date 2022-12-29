@@ -49,8 +49,8 @@ namespace FuelStation
             if (LoginTextBox.Text.IsNullOrEmpty() || PasswordBox.Password.IsNullOrEmpty() || RepeatPasswordBox.Password.IsNullOrEmpty() || LastNameTextBox.Text.IsNullOrEmpty()
                 || FirstNameTextBox.Text.IsNullOrEmpty() || PatronymicTextBox.Text.IsNullOrEmpty())
                 errorMessage = "Заполните все данные!";
-            else if (LoginTextBox.Text.Length < 5)
-                errorMessage = "Введён слишком которокий лоигн!(Минимум 5 символов)";
+            else if (LoginTextBox.Text.Length < 3)
+                errorMessage = "Введён слишком которокий лоигн!(Минимум 3 символов)";
             else if (!PasswordBox.Password.Equals(RepeatPasswordBox.Password))
                 errorMessage = "Пароли не совпадают!";
             else if (EfCoreDbContext.Instance.Employees.Where(e => e.Login == LoginTextBox.Text).ToList().Count != 0)

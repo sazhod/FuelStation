@@ -43,6 +43,8 @@ namespace FuelStation
             else if (employee.Count == 1 && employee[0].Login == login && employee[0].Password == password)
             {
                 this.Hide();
+                LoginTextBox.Text = "";
+                PasswordBox.Password = "";
                 if (employee[0].IdroleNavigation.Id == 1)
                 {
                     AdminMainWindow adminMainWindow = new AdminMainWindow();
@@ -55,7 +57,8 @@ namespace FuelStation
                 }
                 else if(employee[0].IdroleNavigation.Id == 3)
                 {
-
+                    SalesmanMainWindow salesmanMainWindow = new SalesmanMainWindow();
+                    salesmanMainWindow.Show();
                 }
             }
         }

@@ -9,7 +9,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"    
         Background="{DynamicResource MaterialDesignPaper}"
-        FontFamily="{DynamicResource MaterialDesignFont}" HorizontalAlignment="Center" VerticalAlignment="Center"
+        FontFamily="{DynamicResource MaterialDesignFont}" HorizontalAlignment="Center" VerticalAlignment="Center" Closed="Window_Closed"
         >
     <!--<Window.Resources>
         <CollectionViewSource x:Key="Roles" Source="{Binding ViewModels.RoleViewModel}" />
@@ -21,13 +21,131 @@
     Style="{StaticResource MaterialDesignFilledTabControl}">
                 <TabItem
       Header="Приход">
+                    <Grid>
+                        <DataGrid Margin="8,8,8,70" x:Name="FuelSuppliesDatagrid"
+                              AutoGenerateColumns="False"
+                              CanUserAddRows="False"
+                              ItemsSource="{Binding Source=ViewModels.FuelSuppliesViewModel }"
+                              SelectionMode="Single"
+                              SelectionUnit="FullRow"
+                              ColumnWidth="*"
+                              >
 
+                            <DataGrid.Columns>
+                                <!--Binding="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged}"-->
+                                <DataGridTemplateColumn Width="100" Header="Удалить" IsReadOnly="True">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button x:Name="DeleteFuelSupplyButton" Click="DeleteFuelSupplyButton_Click"
+                              Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                              ToolTip="MaterialDesignFloatingActionMiniLightButton" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                <materialDesign:PackIcon Kind="DeleteForever" />
+                                            </Button>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
+                                <materialDesign:DataGridComboBoxColumn
+                                    Header="Принимающий"
+                                    ItemsSourceBinding="{Binding AllEmployees}"
+                                    SelectedValueBinding="{Binding ReceivingEmployeeId}"
+                                    SelectedValuePath="Id"
+                                    DisplayMemberPath="FullName"/>
+
+                                <materialDesign:DataGridComboBoxColumn
+                                    Header="Привозящий"
+                                    ItemsSourceBinding="{Binding AllEmployees}"
+                                    SelectedValueBinding="{Binding BringingEmployeeId}"
+                                    SelectedValuePath="Id"
+                                    DisplayMemberPath="FullName">
+
+                                </materialDesign:DataGridComboBoxColumn>
+
+                                <DataGridTextColumn IsReadOnly="True" Binding="{Binding Datetime}" Header="Дата"></DataGridTextColumn>
+
+                                <materialDesign:DataGridComboBoxColumn
+                                    x:Name="VendorDataGridComboBoxColumn"
+                                    Header="Производитель"
+                                    ItemsSourceBinding="{Binding AllVenders}"
+                                    SelectedValueBinding="{Binding VendorId}"
+                                    SelectedValuePath="Id"
+                                    DisplayMemberPath="Name">
+
+                                </materialDesign:DataGridComboBoxColumn>
+
+                                <materialDesign:DataGridComboBoxColumn
+                                    Header="Топливо"
+                                    ItemsSourceBinding="{Binding AllFuels}"
+                                    SelectedValueBinding="{Binding FuelId}"
+                                    SelectedValuePath="Id"
+                                    DisplayMemberPath="Name">
+
+                                </materialDesign:DataGridComboBoxColumn>
+
+                                <DataGridTextColumn Binding="{Binding Quantity}" Header="Количество"></DataGridTextColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
                 </TabItem>
                 <TabItem
       Header="Продажи">
-                    <TextBlock
-        Margin="8"
-        Text="Filled, centered, uniform width, tab 2" />
+                    <Grid>
+                        <DataGrid Margin="8,8,8,70" x:Name="FuelSalesDatagrid"
+                              AutoGenerateColumns="False"
+                              CanUserAddRows="False"
+                              ItemsSource="{Binding Source=ViewModels.FuelSaleViewModel }"
+                              SelectionMode="Single"
+                              SelectionUnit="FullRow"
+                              ColumnWidth="*"
+                              >
+
+                            <DataGrid.Columns>
+                                <!--Binding="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged}"-->
+                                <DataGridTemplateColumn Width="100" Header="Удалить" IsReadOnly="True">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button x:Name="DeleteFuelSaleButton" Click="DeleteFuelSaleButton_Click"
+                              Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                              ToolTip="MaterialDesignFloatingActionMiniLightButton" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                <materialDesign:PackIcon Kind="DeleteForever" />
+                                            </Button>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
+                                <materialDesign:DataGridComboBoxColumn
+                                    Header="Сотрудник"
+                                    ItemsSourceBinding="{Binding AllEmployees}"
+                                    SelectedValueBinding="{Binding EmployeeId}"
+                                    SelectedValuePath="Id"
+                                    DisplayMemberPath="FullName"/>
+
+                                <DataGridTextColumn IsReadOnly="True" Binding="{Binding Datetime}" Header="Дата"></DataGridTextColumn>
+
+                                <materialDesign:DataGridComboBoxColumn
+                                    x:Name="FuelSaleVendorDataGridComboBoxColumn"
+                                    Header="Производитель"
+                                    ItemsSourceBinding="{Binding AllVenders}"
+                                    SelectedValueBinding="{Binding VendorId}"
+                                    SelectedValuePath="Id"
+                                    DisplayMemberPath="Name">
+
+                                </materialDesign:DataGridComboBoxColumn>
+
+                                <materialDesign:DataGridComboBoxColumn
+                                    Header="Топливо"
+                                    ItemsSourceBinding="{Binding AllFuels}"
+                                    SelectedValueBinding="{Binding FuelId}"
+                                    SelectedValuePath="Id"
+                                    DisplayMemberPath="Name">
+
+                                </materialDesign:DataGridComboBoxColumn>
+
+                                <DataGridTextColumn Binding="{Binding Quantity}" Header="Количество"></DataGridTextColumn>
+                                <DataGridTextColumn Binding="{Binding Totalcost}" Header="Итоговая цена"></DataGridTextColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
                 </TabItem>
                 <TabItem
       Header="Сотрудники">
@@ -58,6 +176,8 @@
                                 <DataGridTextColumn Binding="{Binding Lastname}" Header="Фамилия"></DataGridTextColumn>
                                 <DataGridTextColumn Binding="{Binding Firsname}" Header="Имя"></DataGridTextColumn>
                                 <DataGridTextColumn Binding="{Binding Patronymic}" Header="Отчество"></DataGridTextColumn>
+                                <DataGridTextColumn Binding="{Binding Login}" Header="Логин"></DataGridTextColumn>
+                                <DataGridTextColumn Binding="{Binding Password}" Header="Пароль"></DataGridTextColumn>
 
                                 <materialDesign:DataGridComboBoxColumn
                                     Header="Должность"

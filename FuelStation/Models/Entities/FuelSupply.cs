@@ -10,7 +10,7 @@ namespace FuelStation.Models.Entities
         public int IdBringingEmployee { get; set; }
         public DateTime Datetime { get; set; }
         public int Idfuel { get; set; }
-        public int Quantity { get; set; }
+        public double Quantity { get; set; }
 
         public virtual Employee IdBringingEmployeeNavigation { get; set; } = null!;
         public virtual Employee IdReceivingEmployeeNavigation { get; set; } = null!;
